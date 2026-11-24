@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "muscleguard"
 version = "0.1.0"
-description = "Workout history analyzer: recovery and muscle balance from stdin"
+description = "筋トレ記録から部位バランスと回復日数を出すコマンド"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [{name = "Akira Niitsuma", email = "s25c1078gq@chibatech.ac.jp"}]
