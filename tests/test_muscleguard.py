@@ -7,10 +7,10 @@ from muscleguard import analyze
 
 def example_workouts():
     return [
-        {"date": "2026-11-20", "exercise": "bench_press", "muscles": {"chest": 1.0, "shoulders": 0.3, "arms": 0.3}, "weight": 60, "reps": 10, "sets": 3},
-        {"date": "2026-11-21", "exercise": "lat_pulldown", "muscles": {"back": 1.0, "arms": 0.3}, "weight": 45, "reps": 10, "sets": 3},
-        {"date": "2026-11-22", "exercise": "squat", "muscles": {"legs": 1.0, "abs": 0.3}, "weight": 70, "reps": 10, "sets": 3},
-        {"date": "2026-11-23", "exercise": "bench_press", "muscles": {"chest": 1.0, "shoulders": 0.3, "arms": 0.3}, "weight": 65, "reps": 8, "sets": 4},
+        {"date": "2026-11-20", "exercise": "bench_press", "muscles": {"chest": 1.0, "shoulders": 0.3, "arms": 0.3}, "sets": 3},
+        {"date": "2026-11-21", "exercise": "lat_pulldown", "muscles": {"back": 1.0, "arms": 0.3}, "sets": 3},
+        {"date": "2026-11-22", "exercise": "squat", "muscles": {"legs": 1.0, "abs": 0.3}, "sets": 3},
+        {"date": "2026-11-23", "exercise": "bench_press", "muscles": {"chest": 1.0, "shoulders": 0.3, "arms": 0.3}, "sets": 4},
     ]
 
 
@@ -30,7 +30,7 @@ def test_recovery():
 
 def test_no_record():
     workouts = [
-        {"date": "2026-11-20", "exercise": "bench_press", "muscles": {"chest": 1.0}, "weight": 60, "reps": 10, "sets": 3},
+        {"date": "2026-11-20", "exercise": "bench_press", "muscles": {"chest": 1.0}, "sets": 3},
     ]
     lines = analyze(workouts)
     assert "back - 未記録" in lines
