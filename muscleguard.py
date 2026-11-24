@@ -1,10 +1,6 @@
 # Copyright (c) 2026 Akira Niitsuma
 # SPDX-License-Identifier: MIT
-"""筋トレ記録から部位バランスと回復日数を出すコマンド。
-
-使い方:
-    $ cat workouts.jsonl | muscleguard
-"""
+"""筋トレ記録から部位バランスと回復日数を出すコマンド。"""
 
 import json
 import sys
@@ -23,9 +19,16 @@ def analyze(workouts):
     total = sum(sets.values())
     lines.append("balance")
     for muscle in MUSCLES:
-        share = sets[muscle] / total * 100 if total > 0 else 0.0
+        if total > 0:
+            share = sets[muscle] / total * 100
+        else:
+            share = 0.0
         lines.append(f"{muscle} {sets[muscle]:.1f} {share:.1f}")
-    lines.append("low " + min(MUSCLES, key=lambda muscle: sets[muscle]))
+    low = MUSCLES[0]
+    for muscle in MUSCLES:
+        if sets[muscle] < sets[low]:
+            low = muscle
+    lines.append("low " + low)
     today = max(workout["date"] for workout in workouts)
     lines.append("recovery")
     for muscle in MUSCLES:
@@ -34,7 +37,11 @@ def analyze(workouts):
             lines.append(f"{muscle} - 未記録")
             continue
         passed = (date.fromisoformat(today) - date.fromisoformat(max(dates))).days
-        lines.append(f"{muscle} {passed} {'OK' if passed >= 2 else '休め'}")
+        if passed >= 2:
+            status = "OK"
+        else:
+            status = "休め"
+        lines.append(f"{muscle} {passed} {status}")
     return lines
 
 
