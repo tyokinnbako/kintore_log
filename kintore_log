@@ -1,8 +1,8 @@
+#!/usr/bin/python3
 # Copyright (c) 2026 Akira Niitsuma
 # SPDX-License-Identifier: MIT
 """筋トレ記録から部位バランスと回復日数を出すコマンド。"""
 
-import json
 import sys
 from datetime import date
 
@@ -44,19 +44,28 @@ def analyze(workouts):
         lines.append(f"{muscle} {passed} {status}")
     return lines
 
-
 def main():
-    try:
-        workouts = [json.loads(line) for line in sys.stdin if line.strip()]
-    except json.JSONDecodeError:
-        print("muscleguard: エラー JSON として読めません", file=sys.stderr)
-        sys.exit(2)
+    workouts = []
+    for line in sys.stdin:
+        if not line.strip():
+            continue
+        parts = line.split()
+        if len(parts) != 4:
+            print("kintore_log: エラー 1行は 日付 種目 部位 セット数 の4つで書いてください", file=sys.stderr)
+            sys.exit(2)
+        try:
+            number = int(parts[3])
+        except ValueError:
+            print("kintore_log: エラー セット数は数字で書いてください", file=sys.stderr)
+            sys.exit(2)
+        workout = {"date": parts[0], "exercise": parts[1],
+                   "muscles": {parts[2]: 1.0}, "sets": number}
+        workouts.append(workout)
     if not workouts:
-        print("muscleguard: エラー 筋トレ記録がありません", file=sys.stderr)
+        print("kintore_log: エラー 筋トレ記録がありません", file=sys.stderr)
         sys.exit(2)
     for line in analyze(workouts):
         print(line)
-
-
+        
 if __name__ == "__main__":
     main()

@@ -1,0 +1,4 @@
+2026-11-20 bench_press chest 3
+2026-11-21 lat_pulldown back 3
+2026-11-22 squat legs 3
+2026-11-23 bench_press chest 4
