@@ -48,6 +48,8 @@
 
 ## インストール
 
+    $ git clone https://github.com/tyokinnbako/muscleguard.git
+    $ cd muscleguard
     $ pip install -e ".[dev]"
 
 ## テスト
